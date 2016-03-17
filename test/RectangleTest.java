@@ -1,26 +1,54 @@
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static junit.framework.TestCase.assertEquals;
 
 public class RectangleTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
-    public void testgetAreaShouldGiveAreaOfTheRectangle() throws Exception {
-        Rectangle rectangle = new Rectangle(15, 3);
-        assertEquals(45, rectangle.getArea(),0);
+    public void testRectangleCanNotBeCreatedWithNegativeValues() throws Exception {
+        thrown.expect(Exception.class);
+        thrown.expectMessage("Expected non negative values but got -1.0 and 3.0");
+        Rectangle.create(-1, 3);
     }
     @Test
-    public void testgetareashouldGiveAreaOfTheRectangleAsFloatNumber() throws Exception {
-        Rectangle rectangle = new Rectangle(15.3, 3);
-        assertEquals(45.9, rectangle.getArea(),1);
+    public void testGetAreaShouldGiveAreaOfTheRectangle() throws Exception {
+        Rectangle rectangle = Rectangle.create(1, 3);
+        assertEquals(3, rectangle.calculateArea(),0);
+    }
+
+
+    @Test
+    public void testGetAreaShouldGiveAreaOfTheRectangleAsFloatNumber() throws Exception {
+        Rectangle rectangle = Rectangle.create(5.3, 3);
+        assertEquals(15.9, rectangle.calculateArea(),1);
     }
     @Test
-    public void testgetPerimeterShouldGivePerimeterOfTheRectangle() throws Exception {
-        Rectangle rectangle = new Rectangle(15, 3);
-        assertEquals(36, rectangle.getPerimeter(),0);
+    public void testGetPerimeterShouldGivePerimeterOfTheRectangle() throws Exception {
+        Rectangle rectangle = Rectangle.create(2, 3);
+        assertEquals(10, rectangle.calculatePerimeter(),0);
     }
     @Test
-    public void testgetPerimeterShouldGivePerimeterOfTheRectangleAsAFloatNumber() throws Exception {
-        Rectangle rectangle = new Rectangle(15.3, 3);
-        assertEquals(36.6, rectangle.getPerimeter(),0);
+    public void testGetPerimeterShouldGivePerimeterOfTheRectangleAsAFloatNumber() throws Exception {
+        Rectangle rectangle = Rectangle.create(2.7, 3);
+        assertEquals(11.4, rectangle.calculatePerimeter(),0);
+    }
+    @Test
+    public void testPerimeterOfRectangleShouldBeNonZeroIfLengthAndIsZero() throws Exception {
+        Rectangle rectangle = Rectangle.create(0, 0);
+        assertEquals(0, rectangle.calculatePerimeter(),0);
+    }@Test
+    public void testPerimeterOfRectangleShouldBeZeroIfLengthAndWidthAreNonZeros() throws Exception {
+        Rectangle rectangle = Rectangle.create(0, 0.5);
+        assertEquals(1, rectangle.calculatePerimeter(),0);
+    }
+    @Test
+    public void testAreaOfRectangleShouldBeZeroIfLengthIsZero() throws Exception {
+        Rectangle rectangle = Rectangle.create(0, 2.3);
+        assertEquals(0, rectangle.calculateArea(),0);
     }
 }
