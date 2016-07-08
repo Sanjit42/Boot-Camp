@@ -1,7 +1,3 @@
-/*
-    Job of Rectangle:-
-        Calculate the things which includes length and/or width.
- */
 public class Rectangle {
     private double length, width;
 
